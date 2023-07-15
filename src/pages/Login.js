@@ -24,9 +24,22 @@ export const Login = () => {
       toast.error(error.message, {closeButton: true, position: "bottom-center"});
 
     }
-   
 
+  }
 
+  async function handleLoginGuest(){
+    email.current.value = "rahul@example.com";
+    password.current.value = "rahul12345";
+    try{
+      const authDetail = {
+        email: email.current.value,
+        password: password.current.value
+      }
+      const data = await login(authDetail);
+      data.accessToken ? navigate("/products") : toast.error(data);
+    } catch(error){
+      toast.error(error.message, {closeButton: true, position: "bottom-center"});
+    }
   }
   return (
     <main>
@@ -44,7 +57,7 @@ export const Login = () => {
           </div>
           <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Log In</button>
         </form>
-        <button  className="mt-3 cursor-pointer text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-3 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login As Guest</button>
+        <button onClick={handleLoginGuest} className="mt-3 cursor-pointer text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-3 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login As Guest</button>
     </main>
   )
 }
